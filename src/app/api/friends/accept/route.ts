@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     )) as 0 | 1
 
     if (!hasFriendRequested) {
-      return new Response('No friend Request')
+      return new Response('No friend Request', { status: 400 })
     }
 
     await db.sadd(`user:${session.user.id}:friends`, idToAdd)
