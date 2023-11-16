@@ -24,8 +24,12 @@ const FriendRequests: FC<FriendRequestsProps> = ({
     pusherClient.subscribe(
       toPusherKey(`user:${sessionId}:incoming_friend_requests`)
     )
-    const friendRequestHandler = function () {
-      console.log('Friend Request triggered')
+
+    const friendRequestHandler = function ({
+      senderId,
+      senderEmail,
+    }: IncomingFriendRequest) {
+      setFriendRequests((prev) => [...prev, { senderEmail, senderId }])
     }
     pusherClient.bind('incoming_friend_requests', friendRequestHandler)
 

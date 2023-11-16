@@ -8,11 +8,7 @@ import { toast } from 'react-hot-toast'
 function Login() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  useEffect(() => {
-    console.log(toast)
-    toast('hello')
-  }, [])
-
+  
   const loginHandler = async () => {
     setIsLoading(true)
     try {

@@ -1,16 +1,17 @@
 'use client'
 
-import { cn } from '@/utils/clsx'
-
-import { FC, useRef, useState } from 'react'
+import { cn, toPusherKey } from '@/utils/clsx'
+import { FC, useEffect, useRef, useState } from 'react'
 import { format } from 'date-fns'
 import Image from 'next/image'
+import { pusherClient } from '@/utils/pusher'
 
 interface MessagesProps {
   initialMessages: Message[]
   sessionId: string
   sessionImage: string | null | undefined
   chatPartner: User
+  chatId: string
 }
 
 const formatTimeStamp = function (time: number) {
@@ -21,10 +22,25 @@ const Messages: FC<MessagesProps> = ({
   initialMessages,
   sessionId,
   chatPartner,
+  chatId,
   sessionImage,
 }) => {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const scrollDownRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    pusherClient.subscribe(toPusherKey(`chat:${chatId}`))
+
+    const messageTriggerHandler = function (message: Message) {
+      setMessages((prev) => [message, ...prev])
+    }
+    pusherClient.bind(toPusherKey(`incoming-message`), messageTriggerHandler)
+
+    return () => {
+      pusherClient.unsubscribe(toPusherKey(`incoming-message`))
+      pusherClient.unbind(toPusherKey(`chat:${chatId}`), messageTriggerHandler)
+    }
+  }, [chatId])
 
   return (
     <div

@@ -19,6 +19,7 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
     setIsLoading(true)
     try {
       // await new Promise((resolve) => setTimeout(resolve, 2000))
+      if (!inputValue) return
       await axios.post('/api/message/send', { text: inputValue, chatId })
       setInputValue('')
       textArea.current?.focus()
