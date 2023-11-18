@@ -7,6 +7,12 @@ body section {
   overflow-x: hidden;
 }
 
+@layer base {
+  .container {
+    @apply max-w-7xl mx-auto px-4 md:px-6 lg:px-6;
+  }
+}
+
 .scrollbar-thumb-blue::-webkit-scrollbar-thumb {
   --bg-opacity: 1;
   background-color: #edf2f7;

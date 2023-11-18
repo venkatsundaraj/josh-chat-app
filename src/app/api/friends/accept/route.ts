@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 
     await db.srem(`user:${session.user.id}:incoming_friend_requests`, idToAdd)
 
-    return new Response('Ok', { status: 200 })
+    return new Response('ok', { status: 200 })
   } catch (err) {
     if (err instanceof z.ZodError) {
       return new Response('Invalid input data', { status: 422 })
@@ -50,5 +50,6 @@ export async function POST(req: Request) {
     if (err instanceof AxiosError) {
       return new Response('Invalid Request', { status: 400 })
     }
+    return new Response('Something went wrong', { status: 400 })
   }
 }
