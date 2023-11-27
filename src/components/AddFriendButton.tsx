@@ -53,7 +53,7 @@ const AddFriendButton: FC<AddFriendButtonProps> = ({}) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="max-w-screen h-48 gap-4 w-screen flex flex-col items-center justify-between"
+      className="max-w-screen h-48 gap-4 w-full flex flex-col items-center justify-between"
     >
       <h1 className="text-slate-900 font-bold text-3xl">Add a Friend</h1>
       <label
