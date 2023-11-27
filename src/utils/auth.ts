@@ -69,7 +69,7 @@ export const authOptions: NextAuthOptions = {
       return session
     },
     redirect() {
-      return '/dashboard'
+      return `${process.env.NEXTAUTH_URL}/dashboard`
     },
   },
 }
